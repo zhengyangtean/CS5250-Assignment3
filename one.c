@@ -41,7 +41,7 @@ ssize_t onebyte_read(struct file *filep, char *buf, size_t count, loff_t *f_pos)
 	/*please complete the function on your own*/
 	if (*(f_pos) == 0 ){ // if offset == 0 ie. reading the first character for the first time
 		put_user(*(onebyte_data),buf);
-		*(f_pos)++;
+		*(f_pos) += 1;
 		return 1;
 	}
 	// else offset > 1 means read the character already so end the reading
@@ -52,7 +52,7 @@ ssize_t onebyte_write(struct file *filep, const char *buf, size_t count, loff_t 
 {
 	/*please complete the function on your own*/
 	if (*(f_pos) == 0){  // if offset == 0 ie. writing the first character for the first time
-		get_user(*(onebyte_data),buf)
+		get_user(*(onebyte_data),buf);
 		*f_pos += 1;
 		return 1;
 	} else { // else offset > 1 means write the character still have more stuff, so throw out of space
@@ -77,8 +77,7 @@ static int onebyte_init(void)
 	if (!onebyte_data) {
 		onebyte_exit();
 		// cannot allocate memory
-		// return no memory error, negative signify a
-		failure
+		// return no memory error, negative signify a failure
 		return -ENOMEM;
 	}
 	// initialize the value to be X
